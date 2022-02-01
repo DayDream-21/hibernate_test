@@ -9,7 +9,26 @@ import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(readFromCatalogsById(3));
+        addBookToReaderById(2, 2);
+    }
+
+    private static void addBookToReaderById(int readerId, int bookId) {
+        try (SessionFactory sessionFactory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Reader.class)
+                .addAnnotatedClass(Book.class)
+                .addAnnotatedClass(Author.class)
+                .buildSessionFactory();
+            Session session = sessionFactory.getCurrentSession()) {
+
+            session.beginTransaction();
+
+            Reader reader = session.get(Reader.class, readerId);
+            Book book = session.get(Book.class, bookId);
+            reader.getBooks().add(book);
+
+            session.getTransaction().commit();
+        }
     }
 
     private static void createCatalog(String catalogTitle) {
