@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class Main {
+public class LibraryMain {
     public static void main(String[] args) {
         addBookToReaderById(2, 2);
     }
