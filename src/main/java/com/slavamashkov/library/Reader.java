@@ -1,4 +1,4 @@
-package com.slavamashkov;
+package com.slavamashkov.library;
 
 import lombok.*;
 
@@ -11,28 +11,23 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "readers")
+public class Reader {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NonNull
-    @Column(name = "title")
-    private String title;
-
-    @NonNull
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @Column(name = "name")
+    private String name;
 
     @ToString.Exclude
     @ManyToMany
     @JoinTable(
             name = "books_readers",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "reader_id")
+            joinColumns = @JoinColumn(name = "reader_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    List<Reader> readers;
+    private List<Book> books;
 }

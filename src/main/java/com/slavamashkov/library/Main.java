@@ -1,4 +1,4 @@
-package com.slavamashkov;
+package com.slavamashkov.library;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
