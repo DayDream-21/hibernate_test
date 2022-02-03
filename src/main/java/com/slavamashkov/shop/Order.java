@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "customers_products", schema = "shop")
 public class Order {
+    @NonNull
     @EmbeddedId
     private OrderKey orderKey;
 
