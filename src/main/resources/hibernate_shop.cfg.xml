@@ -17,5 +17,6 @@
 
         <mapping class="com.slavamashkov.shop.Product"/>
         <mapping class="com.slavamashkov.shop.Customer"/>
+        <mapping class="com.slavamashkov.shop.Order"/>
     </session-factory>
 </hibernate-configuration>
