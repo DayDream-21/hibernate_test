@@ -10,7 +10,36 @@ import java.util.Scanner;
 
 public class ShopMain {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Command parameter(s):" +
+                "\n 1) buy product_name customer_name " +
+                "\n 2) showShopList customer_name" +
+                "\n 3) showSales product_name" +
+                "\n 4) addCustomer customer_name" +
+                "\n 5) addProduct product_name price(x.xx)" +
+                "\n 6) removeCustomer customer_name" +
+                "\n 7) removeProduct product_name" +
+                "\n 8) exit");
 
+        while (scanner.hasNext()) {
+            System.out.println("Enter command and parameter(s)");
+            String command = scanner.nextLine();
+            if (command.equals("exit")) {
+                break;
+            }
+
+            String[] commandParts = command.split(" ");
+
+            switch (commandParts[0]) {
+                case "buy"            -> addProductToCustomerByName(commandParts[1], commandParts[2]);
+                case "showShopList"   -> showProductsByCustomerName(commandParts[1]);
+                case "showSales"      -> showCustomersByProductName(commandParts[1]);
+                case "addCustomer"    -> addCustomer(commandParts[1]);
+                case "addProduct"     -> addProduct(commandParts[1], BigDecimal.valueOf(Double.parseDouble(commandParts[2])));
+                case "removeCustomer" -> removeCustomerByCustomerName(commandParts[1]);
+                case "removeProduct"  -> removeProductByProductName(commandParts[1]);
+            }
+        }
     }
 
     private static void showProductsByCustomerName(String customerName) {
