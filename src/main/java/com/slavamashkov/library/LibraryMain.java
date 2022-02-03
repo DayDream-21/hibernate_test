@@ -9,15 +9,12 @@ import java.util.Optional;
 
 public class LibraryMain {
     public static void main(String[] args) {
-        addBookToReaderById(2, 2);
+        addBookToReaderById(3, 2);
     }
 
-    private static void addBookToReaderById(int readerId, int bookId) {
+    private static void addBookToReaderById(int bookId, int readerId) {
         try (SessionFactory sessionFactory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Reader.class)
-                .addAnnotatedClass(Book.class)
-                .addAnnotatedClass(Author.class)
+                .configure("hibernate_library.cfg.xml")
                 .buildSessionFactory();
             Session session = sessionFactory.getCurrentSession()) {
 
@@ -33,8 +30,7 @@ public class LibraryMain {
 
     private static void createCatalog(String catalogTitle) {
         try (SessionFactory catalogSessionFactory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Catalog.class)
+                .configure("hibernate_library.cfg.xml")
                 .buildSessionFactory();
             Session session = catalogSessionFactory.getCurrentSession()) {
 
@@ -47,8 +43,7 @@ public class LibraryMain {
 
     private static Catalog readFromCatalogsById(long id) {
         try (SessionFactory catalogSessionFactory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .addAnnotatedClass(Catalog.class)
+                .configure("hibernate_library.cfg.xml")
                 .buildSessionFactory();
              Session session = catalogSessionFactory.getCurrentSession()) {
 
