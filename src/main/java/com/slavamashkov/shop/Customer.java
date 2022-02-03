@@ -1,6 +1,7 @@
 package com.slavamashkov.shop;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,15 +20,11 @@ public class Customer {
     private Integer id;
 
     @NonNull
-    @Column(name = "name", nullable = false, length = 20)
+    @Column(name = "name", nullable = false, unique = true, length = 20)
     private String name;
 
     @ToString.Exclude
-    @ManyToMany
-    @JoinTable(
-            name = "customers_products",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    List<Product> products;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Order> orders;
 }

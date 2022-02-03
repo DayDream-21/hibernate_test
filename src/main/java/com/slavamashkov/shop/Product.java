@@ -1,6 +1,7 @@
 package com.slavamashkov.shop;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ public class Product {
     private Integer id;
 
     @NonNull
-    @Column(name = "name", nullable = false, length = 30)
+    @Column(name = "name", nullable = false, unique = true, length = 30)
     private String name;
 
     @NonNull
@@ -28,11 +29,7 @@ public class Product {
     private BigDecimal price;
 
     @ToString.Exclude
-    @ManyToMany
-    @JoinTable(
-            name = "customers_products",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id")
-    )
-    List<Customer> customers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Order> orders;
 }
