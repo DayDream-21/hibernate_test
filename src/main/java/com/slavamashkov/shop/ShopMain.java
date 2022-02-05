@@ -19,7 +19,8 @@ public class ShopMain {
                 "\n 5) addProduct product_name price(x.xx)" +
                 "\n 6) removeCustomer customer_name" +
                 "\n 7) removeProduct product_name" +
-                "\n 8) exit");
+                "\n 8) changePrice product_name price(x.xx)" +
+                "\n 9) exit");
 
         while (scanner.hasNext()) {
             System.out.println("Enter command and parameter(s)");
@@ -38,6 +39,7 @@ public class ShopMain {
                 case "addProduct"     -> addProduct(commandParts[1], BigDecimal.valueOf(Double.parseDouble(commandParts[2])));
                 case "removeCustomer" -> removeCustomerByCustomerName(commandParts[1]);
                 case "removeProduct"  -> removeProductByProductName(commandParts[1]);
+                case "changePrice"    -> changePriceByProductName(commandParts[1], BigDecimal.valueOf(Double.parseDouble(commandParts[2])));
             }
         }
     }
@@ -172,6 +174,26 @@ public class ShopMain {
             order.setPrice(product.getPrice());
 
             session.save(order);
+
+            session.getTransaction().commit();
+        }
+    }
+
+    private static void changePriceByProductName(String productName, BigDecimal price) {
+        try (SessionFactory sessionFactory = new Configuration()
+                .configure("hibernate_shop.cfg.xml")
+                .buildSessionFactory();
+             Session session = sessionFactory.getCurrentSession()) {
+
+            session.beginTransaction();
+
+            Product product = (Product) session
+                    .createQuery("from Product product where product.name = :name")
+                    .setParameter("name", productName)
+                    .getSingleResult();
+
+            product.setPrice(price);
+            session.save(product);
 
             session.getTransaction().commit();
         }
