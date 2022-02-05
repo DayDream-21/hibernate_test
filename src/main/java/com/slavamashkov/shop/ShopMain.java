@@ -59,7 +59,9 @@ public class ShopMain {
 
             List<Order> orders = customer.getOrders();
             System.out.println("Products for " + customer.getName() + ": ");
-            orders.forEach(order -> System.out.println(order.getProduct().toString()));
+            orders.forEach(order ->
+                    System.out.printf("Order(name=%s, price=%.2f)", order.getProduct().getName(), order.getPrice())
+            );
 
             session.getTransaction().commit();
         }
