@@ -1,8 +1,10 @@
 package com.slavamashkov.test;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,8 +14,13 @@ import javax.persistence.*;
 @Table(name = "test_person", schema = "schema_export")
 public class TestPerson {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "uuid", updatable = false, nullable = false)
+    UUID id;
 
     @NonNull
     @Column(name = "test_person_name", nullable = false, unique = true, length = 20)
