@@ -23,4 +23,8 @@ public class TestPerson {
     @Enumerated(EnumType.STRING)
     @Column(name = "department", nullable = false)
     Department department;
+
+    @NonNull
+    @Column(name = "salary", nullable = false)
+    Integer salary;
 }
